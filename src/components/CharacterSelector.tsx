@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight, FiX } from "react-icons/fi";
 import { FaClock, FaProjectDiagram, FaTools } from "react-icons/fa";
+
+interface Props {
+  url: string;
+  label: string;
+}
 
 interface Character {
   name: string;
@@ -14,6 +19,15 @@ interface Character {
   equipment: string;
   image: string;
 }
+
+const LinkButton: React.FC<Props> = ({ url, label }) => (
+  <button
+    className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded"
+    onClick={() => window.open(url, "_blank", "noopener")}
+  >
+    {label}
+  </button>
+);
 
 const characters: Character[] = [
   {
@@ -158,6 +172,12 @@ const CharacterSelector: React.FC = () => {
         {showModal && (
           <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4">
             <div className="bg-gray-800 text-white p-6 sm:p-8 rounded-2xl w-full max-w-screen-md lg:max-w-screen-lg grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-6 lg:gap-8 items-start lg:items-center">
+              <button
+                className="absolute top-4 right-4 text-gray-400 hover:text-white focus:outline-none"
+                onClick={() => setShowModal(false)}
+              >
+                <FiX size={24} />
+              </button>
               {/* Image Section */}
               <div className="flex justify-center items-center">
                 <img
@@ -210,12 +230,11 @@ const CharacterSelector: React.FC = () => {
                   <FaTools className="mr-2 text-gray-400" />
                   <span>{char.equipment}</span>
                 </div>
-                <button
-                  className="mt-6 w-full px-6 py-3 bg-red-600 hover:bg-red-700 rounded-lg text-base sm:text-lg"
-                  onClick={() => setShowModal(false)}
-                >
-                  Close
-                </button>
+
+                <LinkButton
+                  url="https://calendly.com/alicejost/15min"
+                  label="Let's Talk"
+                />
               </div>
             </div>
           </div>
